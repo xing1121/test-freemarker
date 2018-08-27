@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>进阶技能</h1>
+	<div>
+		<h2>IF表达式:</h2>
+		<ul>
+			<#assign a=100/>
+			<li>a:${a}</li>
+			<li>
+				<!-- freemarker表达式中使用 > < 需要使用转义 -->
+				a>=99?:
+				<#if a&gt;=99>
+					是
+				</#if>
+			</li>
+			<li>
+				a==100?:
+				<#if a==100>
+					是
+				<#else>
+					否
+				</#if>
+			</li>
+			<li>
+				a等于99、100、还是其他?:
+				<#if a==99>
+					99
+				<#elseif a==100>
+					100
+				<#else>
+					其他
+				</#if>
+			</li>
+			<!-- if persons2222?? 或 if persons2222?exists : 代表先判断是不是空，非空才会执行语句块内的代码 -->
+			<#if persons2222?exists>
+				persons2222
+			</#if>
+			<#if persons2222??>
+				<#list persons as person>
+					<li>person:${person}</li>
+				</#list>
+			</#if>
+			<!-- 支持逻辑运算 : &&，||，!，支持()优先运算 -->
+			<#assign language='java'/>
+			<#if language == 'python' || language == 'java'>
+				<li>python or java</li>
+			</#if>
+			<#if ((language == 'java') && (language?length == 4))>
+				<li>java,length is 4</li>
+			</#if>
+			<#if language != 'python'>
+				<li>not python</li>
+			</#if>
+		</ul>
+	</div>
+	<div>
+		<!-- switch语法:和java一样，注意加break和default -->
+		<h2>SWITCH表达式:</h2>
+		<#assign swv=2/>
+		<ul>
+			<#switch swv>
+				<#case 10>
+					<li>10</li>
+					<#break>
+				<#case 2>
+					<li>2</li>
+					<#break>
+				<#case 3>
+					<li>3</li>
+					<#break>
+				<#default>
+					<li>0</li>
+			</#switch>
+		</ul>
+	</div>
+	<div>
+		<h2>自定义函数（整数排序sort_int）:</h2>
+		<ul>
+			<#assign myList=[2,3,4,5,1,8,9,8,7]/>
+			<li>
+				未排序：
+				<#list myList as x>
+					${x},
+				</#list>
+			</li>
+			<li>
+				<!-- 排序方法从Controller层传过来的 -->
+				已排序：
+				<#list sort_int(myList) as x>
+					${x},
+				</#list>
+			</li>
+		</ul>
+	</div>
+	<div>
+		<h2>自定义指令:</h2>
+		<ul>
+			<!-- 自定义指令使用@，freemarker自带指令使用# -->
+			<!-- 判断用户是否有admin的角色，如果有，列出该角色所有的权限 -->
+			<!-- username和role为入参，用空格隔开；result1和result2为返回值，用逗号隔开；入参和返回值之间用分号隔开。 -->
+			<@role username='zhangsan' role='admin';result1,result2>
+				<#if result1>
+					我拥有admin角色
+				</#if>
+				---
+				<#if result2??>
+					admin角色的权限:<#list result2 as role>${role},</#list>
+				</#if>
+			</@role>
+		</ul>
+	</div>
+</body>
+</html>

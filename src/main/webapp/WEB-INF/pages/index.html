@@ -1,0 +1,18 @@
+<!-- 手动引入ftl文件 -->
+<#import "/WEB-INF/ftl/app.ftl" as app>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>主页</title>
+</head>
+<body>
+	<h1>项目路径：${app.ctp}</h1>
+	<a href="${app.ctp}/hello.html">hello</a><br/>
+	<a href="${app.ctp}/person/persons.html">persons</a><br/>
+	<a href="${app.ctp}/cp/cp1.html">cp1</a><br/>
+	<a href="${app.ctp}/cp/cp2.html">cp2</a><br/>
+	<a href="${app.ctp}/cp/cp3.html">cp3</a><br/>
+	<a href="${app.ctp}/cp/cp4.html">cp4</a><br/>
+</body>
+</html>

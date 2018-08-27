@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>常用内建函数</h1>
+	<div>
+		<h2>1.字符串常用内建函数:</h2>
+		<ul>
+			<#assign a='Hello'/>
+			<#assign b='World'/>
+			<li>a:${a}</li>
+			<li>b:${b}</li>
+			<li>+:${a + b}</li>
+			<li>substring:${(a + b)?substring(0, 5)}</li>
+			<li>length:${(a + b)?length}</li>
+			<li>upper_case:${(a + b)?upper_case}</li>
+			<li>lower_case:${(a + b)?lower_case}</li>
+			<li>index_of:${(a + b)?index_of('W')}</li>
+			<li>last_index_of:${(a + b)?last_index_of('o')}</li>
+			<li>replace:${(a + b)?replace('W', 'WWWWWW')}</li>
+			<!-- split分割 -->
+			<li><#list "a|b|c|d"?split("|") as x>${x},</#list></li>
+			<#assign d1 = "2018-08-27 10:11:55"/>
+			<#assign d2 = "2018-08-27"/>
+			<#assign d3 = "10:11:55"/>
+			<!-- 字符串转日期时间 -->
+			<li>${d1?datetime("yyyy-MM-dd HH:mm:ss")}</li>
+			<li>${d2?date("yyyy-MM-dd")}</li>
+			<li>${d3?time("HH:mm:ss")}</li>
+		</ul>
+	</div>
+	<div>
+		<h2>2.数字常用内建函数:</h2>
+		<ul>
+			<#assign num1 = 3.1415926/>
+			<!-- 保留两位小数，四舍五入，.##一样的效果 -->
+			<li>${num1?string("0.##")}</li>
+			<!-- 四舍五入为整数 -->
+			<li>${num1?round}</li>
+		</ul>
+	</div>
+	<div>
+		<h2>3.list常用内建函数:</h2>
+		<ul>
+			<#assign l1 = [1,2,3,4,11,12,13,14,21,22,23,24,31]/>
+			<!-- 分块，4个分为一块 -->
+			<li>${l1?chunk(4)?size}</li>
+			<!-- 遍历l1分块后的第一块（也是个list） -->
+			<li><#list l1?chunk(4)?first as x>${x},</#list></li>
+			<#assign myList=[21,13,14,15,11,81,19,81,17]/>
+			<li>
+				<!-- list自带排序，x_index获取索引，myList[index]获取指定索引的value -->
+				自带正序：
+				<#list myList?sort as x>
+					${'index' + x_index}:${x}
+				</#list>
+			</li>
+			<li>
+				自带倒序：
+				<#list myList?sort?reverse as x>
+					${'index' + x_index}:${x}
+				</#list>
+			</li>
+			<li>
+				索引取值：
+				<#list myList as x>
+					${'index' + x_index}:${myList[x_index]}
+				</#list>
+			</li>
+		</ul>
+	</div>
+	
+	<div>
+		<h2>4.其他内建函数:</h2>
+		<ul>
+			<!-- 是否数字 -->
+			<li>${"123"?is_number}</li>
+			<li>${123?is_number}</li>
+			<!-- 是否字符串 -->
+			<li>${"123"?is_string}</li>
+			<!-- 是否有内容 -->
+			<li>${haha!"哈哈"}</li>
+			<li>${haha?has_content?string("yes", "no")}</li>
+			<!-- eval:执行，将字符串转为整数 -->
+			<li>${("1" + "2")?is_number}</li>
+			<li>${("1" + "2")?eval?is_number}</li>
+		</ul>
+	</div>
+</body>
+</html>

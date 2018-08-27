@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>macro、nested、function指令</h1>
+	
+	<h2>macro:宏指令（页面自定义指令，封装模板片段）</h2>
+	<!-- 定义macro宏指令:<#macro macro_name param1 param2>xxx${param1}xxx</#macro>-->
+	<!-- 事实上面这个注释中的定义已经被执行了。。。 -->
+	<!-- 调用宏指令:<@macro_name param1="xxx" param2="xxx"/> -->
+	<div>
+		<ul>
+			<li>
+				无参数的macro:
+				<#macro test>
+					<font color="red">我是无参数的macro指令！</font>
+				</#macro>
+				<@test/>
+			</li>
+			<li>
+				有参数的macro:
+				<#macro test param1>
+					<font color="red">我是有参数的macro指令，${param1}！</font>
+				</#macro>
+				<@test param1="哈哈"/>
+			</li>
+			<li>
+				有默认参数的macro:
+				<#macro test param1="java" param2="python">
+					<font color="red">我是有默认参数的macro指令，${param1}，${param2}！</font>
+				</#macro>
+				<@test param1="哈哈"/>
+			</li>
+			<li>
+				有多个参数的macro:
+				<!-- 调用时传入的paramExt会相当于一个map的形式，通过参数名取到值 -->
+				<#macro test param1="java" param2="python" paramExt...>
+					<font color="red">我是有多个参数的macro指令，${param1}，${param2}！</font>---
+					<font color="red">${paramExt['param4']}！</font>
+				</#macro>
+				<@test param1="哈哈" param2="java" param3="js" param4="html"/>
+			</li>			
+		</ul>
+	</div>
+	
+	<h2>nested:内嵌指令（结合macro使用，动态封装模板片段）</h2>
+	<!-- 单独使用macro只能在调用时控制参数的传入，单向调用，↑ -->
+	<!-- 使用macro + nested在调用时可以控制参数的传入和macro内嵌内容的传入，相当于一个双向调用，↑↓ -->
+	<div>
+		<ul>
+			<li>
+				<!-- 定义 -->
+				<#macro test param1>
+					${param1}&nbsp;<hr/>
+					<#nested param1 , "我的nested参数"/>
+				</#macro>
+				<!-- 调用 -->
+				<@test param1="哈哈"; var1, var2>
+					<font color="red">hello:${var1}, ${var2}</font>
+				</@test>
+			</li>
+			<li>
+				<!-- 调用 -->
+				<@test param1="哈哈"; var1, var2>
+					hello:${var1}, ${var2}
+				</@test>
+			</li>
+		</ul>
+	</div>
+		
+	<h2>function:函数（页面自定义函数）</h2>
+	<!-- 定义function函数:<#function function_name param1 param2><#return param1 + param2/></#function>-->
+	<!-- 事实上面这个注释中的定义已经被执行了。。。 -->
+	<!-- 调用函数: ${doAdd(11,12)}-->
+	<div>
+		<ul>
+			<li>
+				<!-- 定义 -->
+				<#function doAdd param1 param2>
+					<#return param1 + param2/>
+				</#function>
+				<!-- 调用 -->
+				${doAdd(11,12)}
+			</li>
+		</ul>
+	</div>
+	
+</body>
+</html>

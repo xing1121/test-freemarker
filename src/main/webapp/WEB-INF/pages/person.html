@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<table align="left" border="1" width="500" height="500" cellspacing="0" style="border: 10px solid blue; text-align: center;">
+		<thead>
+			<tr>
+				<td>ID</td>
+				<td>Name</td>
+				<td>Email</td>
+				<td>Age</td>
+				<td>BirthDay</td>
+			</tr>
+		</thead>
+		<tbody>
+			<#list persons as person>
+			<tr>
+				<td>${person.id}</td>
+				<td>${person.name}</td>
+				<td>${person.email}</td>
+				<td>${person.age}</td>
+				<td>${person.birthDay?string('yyyy-MM-dd HH:mm:ss')}</td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+</body>
+</html>

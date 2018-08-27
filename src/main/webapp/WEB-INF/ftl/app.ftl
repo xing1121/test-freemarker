@@ -1,0 +1,1 @@
+<#assign ctp=request.contextPath/>
